@@ -28,6 +28,9 @@
                     {% if user.is_superuser %}
                         <li><i class="icon-globe"></i> <a href="{% url 'domain_index' %}">{% trans "Domains" %}</a></li>
                     {% endif %}
+                    {% if user.is_superuser %}
+                        <li><i class="icon-globe"></i> <a href="{% url 'user_index' %}">{% trans "Users" %}</a></li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                         <li><i class="icon-cog"></i> <a href="{% url 'user_mailmansettings' %}">{% trans "My Settings" %}</a></li>
                     {% endif %}
