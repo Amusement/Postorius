@@ -721,11 +721,26 @@ class UserNew(FieldsetForm):
     """
     Form field to add a new user
     """
+    CHOICES = (('M', 'Male',), ('F', 'Female',))
     display_name = forms.CharField(
         label=_('User Name'),
         required=True,
         error_messages={'required': _('Please enter a display name.'),
                         'invalid': _('Please enter a valid display name.')})
+                        
+    essay = forms.CharField(
+        label=_('Essay describing yourself'),
+        widget=forms.Textarea,
+        required=True,
+        error_messages={'required': _('Please enter essay.')})
+
+    gender = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+
+    location= forms.CharField(
+        label=_('Location'),
+        required=True,
+        error_messages={'required': _('Please enter your location.')})
+                   
     email = forms.EmailField(
         label=_("User's email address"),
         error_messages={
@@ -746,8 +761,17 @@ class UserNew(FieldsetForm):
         cleaned_data = self.cleaned_data
         password = cleaned_data.get("password")
         password_repeat = cleaned_data.get("password_repeat")
+        essay1 = cleaned_data.get("essay")
+        gender1 = cleaned_data.get("gender")
+        location1 = cleaned_data.get("location")
         if password != password_repeat:
             raise forms.ValidationError("Passwords must be identical.")
+        if not essay1:
+            raise forms.ValidationError('Please fill in Essay.')
+        if not gender1:
+            raise forms.ValidationError('Please fill in Gender.')
+        if not location1:
+            raise forms.ValidationError('Please fill in Location.')
 
         return cleaned_data
 
