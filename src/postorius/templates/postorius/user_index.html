@@ -1,0 +1,39 @@
+{% extends postorius_base_template %}
+{% load url from future %}
+{% load i18n %}
+
+{% block subtitle %}
+{% trans "Users" as page_title %}{{ page_title }}
+{% endblock %}
+
+{% block main %}
+    <h1>{% trans "User Index" %}</h1>
+    <p>
+        <a class="btn btn-success" href="{% url 'user_new' %}">{% trans "Create User" %}</a>
+    </p>
+
+    <table class="table table-bordered table-striped">
+    	<thead>
+    		<tr>
+                <th>{% trans "Display Name" %}</th>
+                <th>{% trans "Essay" %}</th>
+                <th>{% trans "Gender" %}</th>
+                <th>{% trans "Location" %}</th>
+                <th>&nbsp;</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+            {% for user in users %}
+    		<tr>
+    			<td><a href="{% url 'user_summary' user_id=user.user_id %}">{{ user.display_name }}</a></td>
+    			<td>{{ user.essay }}</td>
+                        <td>{{ user.gender }}</td>
+                        <td>{{ user.location }}</td>
+                        <td><a href="{% url 'user_delete' user_id=user.user_id %}" class="btn btn-mini btn-danger">{% trans 'Delete' %}</a></td>
+    			
+    			
+    		</tr>
+            {% endfor %}
+    	</tbody>
+    </table>
+{% endblock main %}
