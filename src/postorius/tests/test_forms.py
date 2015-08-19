@@ -51,6 +51,67 @@ class DomainNewTest(unittest.TestCase):
         })
         self.assertFalse(form.is_valid())
 
+class UserNewTest(unittest.TestCase):
+
+    def test_form_fields_user(self):
+        form = UserNew({
+            'display_name': 'Naph',
+            'essay': 'GSoC',
+            'gender': 'F',
+            'location': 'Vancouver',
+            'email': 'amusement@github.com',
+            'password': 'pass',
+            'password_repeat': 'pass',
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_form_fields_essay_invalid(self):
+	form = UserNew({
+	    'display_name': 'Naph',
+	    'essay': '',
+	    'gender': 'F',
+	    'location': 'Vancouver',
+	    'email': 'amusement@github.com',
+	    'password': 'pass',
+ 	    'password_repeat': 'pass',
+	})
+	self.assertFalse(form.is_valid())
+
+    def test_form_fields_gender_invalid(self):
+	form = UserNew({
+	    'display_name': 'Naph',
+	    'essay': 'GSoC',
+	    'gender': 'Huh',
+	    'location': 'Vancouver',
+	    'email': 'amusement@github.com',
+	    'password': 'pass',
+	    'password_repeat': 'pass',
+	})
+	self.assertFalse(form.is_valid())
+
+    def test_form_fields_location_invalid(self):
+	form = UserNew({
+	    'display_name': 'Naph',
+	    'essay': 'GSoC',
+	    'gender': 'F',
+	    'location': '',
+	    'email': 'amusement@github.com',
+	    'password': 'pass',
+	    'password_repeat': 'pass',
+	})
+	self.assertFalse(form.is_valid())
+
+    def test_form_fields_email_invalid(self):
+        form = UserNew({
+            'display_name': 'Naph',
+            'essay': 'GSoC',
+            'gender': 'F',
+            'location': 'Vancouver',
+            'email': 'amusementgithub.com',
+            'password': 'pass',
+            'password_repeat': 'pass',
+        })
+        self.assertFalse(form.is_valid())
 
 class ListSubscribeTest(unittest.TestCase):
     def test_subscribe_works(self):
