@@ -1,0 +1,82 @@
+{% extends postorius_base_template %}
+{% load url from future %}
+{% load i18n %}
+
+{% block subtitle %}
+{% trans "Add User" as page_title %}{{ page_title }}
+{% endblock %}
+
+{% block main %}
+    {% include 'postorius/menu/settings_nav.html' %}
+
+    <form action="{% url 'user_new' %}" method="post" class="well form-horizontal"> {% csrf_token %}
+    {{ form.non_field_errors }}
+    <fieldset>
+	<legend>{% trans "Add a new User" %}</legend>
+
+	<div class="control-group">
+	    {{ form.mail_host.errors }}
+	    <label for="id_displayname" class="control-label">{% trans "Display Name:" %}</label>
+	    <div class="controls">
+		{{ form.display_name}}
+		
+	    </div>
+	</div>
+
+	<div class="control-group">
+	    {{ form.web_host.errors }}
+            <p>Please provide a short essay on your qualifications to join. To join Systers, you must tell us your involvement in technical computing. </p>
+	    <label for="id_essay" class="control-label">{% trans "Essay Describing Yourself:" %}</label>
+	    <div class="controls">
+		{{ form.essay}}
+		
+	    </div>
+	</div>
+        <div class="control-group">
+	    {{ form.web_host.errors }}
+	    <label for="id_gender" class="control-label">{% trans "Your Gender:" %}</label>
+	    <div class="controls">
+		{{ form.gender}}
+		
+	    </div>
+	</div>
+        <div class="control-group">
+	    {{ form.web_host.errors }}
+	    <label for="id_location" class="control-label">{% trans "Location:" %}</label>
+	    <div class="controls">
+		{{ form.location}}
+		
+	    </div>
+	</div>
+	<div class="control-group">
+	    {{ form.description.errors }}
+	    <label for="id_email" class="control-label">{% trans "Email:" %}</label>
+	    <div class="controls">
+		{{ form.email}}
+		
+	    </div>
+	</div>
+        <div class="control-group">
+	    {{ form.description.errors }}
+	    <label for="id_password" class="control-label">{% trans "Password:" %}</label>
+	    <div class="controls">
+		{{ form.password}}
+		
+	    </div>
+	</div>
+         <div class="control-group">
+	    {{ form.description.errors }}
+	    <label for="id_passwordrepeat" class="control-label">{% trans "Password Repeat:" %}</label>
+	    <div class="controls">
+		{{ form.password_repeat}}
+		
+	    </div>
+	</div>
+	<div class="form-actions">
+	    <button class="btn btn-success btn-primary" type="submit">{% trans "Create User" %}</button>
+	</div>
+
+    </fieldset>
+</form>
+
+{% endblock main %}
