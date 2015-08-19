@@ -257,24 +257,14 @@ class AddressActivationView(TemplateView):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def user_index(request, page=1, template='postorius/users/index.html'):
-    """Show a table of all users.
-    """
-    page = int(page)
-    error = None
+def user_index(request):
     try:
-        mm_user_page = utils.get_client().get_user_page(25, page)
+        existing_users = MailmanUser.objects.all()
     except MailmanApiError:
         return utils.render_api_error(request)
-    return render_to_response(
-        template,
-        {'error': error,
-         'mm_user_page': mm_user_page,
-         'mm_user_page_nr': page,
-         'mm_user_page_previous_nr': page - 1,
-         'mm_user_page_next_nr': page + 1,
-         'mm_user_page_show_next': len(mm_user_page) >= 25},
-        context_instance=RequestContext(request))
+    return render_to_response('postorius/user_index.html',
+                              {'users': existing_users},
+                              context_instance=RequestContext(request))
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -284,6 +274,9 @@ def user_new(request):
         form = UserNew(request.POST)
         if form.is_valid():
             user = MailmanUser(display_name=form.cleaned_data['display_name'],
+                               essay=form.cleaned_data['essay'],
+                               gender=form.cleaned_data['gender'],
+                               location=form.cleaned_data['location'],
                                email=form.cleaned_data['email'],
                                password=form.cleaned_data['password'])
             try:
@@ -297,7 +290,7 @@ def user_new(request):
             return redirect("user_index")
     else:
         form = UserNew()
-    return render_to_response('postorius/users/new.html',
+    return render_to_response('postorius/user_new.html',
                               {'form': form, 'message': message},
                               context_instance=RequestContext(request))
 
