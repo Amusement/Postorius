@@ -43,6 +43,9 @@ per_list_urlpatterns = patterns('postorius.views',
                                 url(r'^$',
                                     ListSummaryView.as_view(
                                     ), name='list_summary'),
+                                url(r'^users/(?P<user_id>[^/]+)$',
+                                    UserSummaryView.as_view(
+                                    ), name='user_summary'),
                                 url(r'^subscribe$',
                                     ListSubscribeView.as_view(
                                     ), name='list_subscribe'),
@@ -103,6 +106,11 @@ urlpatterns = patterns(
     # /account/
     url(r'^accounts/login/$', login_view,
         {"template_name": "postorius/login.html"}, name='user_login'),
+    url(r'^users/new/$', 'user_new', name='user_new'),
+    url(r'^users/(?P<user_id>[^/]+)/$',UserSummaryView.as_view(), name='user_summary'),
+    url(r'^users/$', 'user_index', name='user_index'),
+    url(r'^users/(?P<user_id>[^/]+)/delete$',
+        'user_delete', name='user_delete'),
     url(r'^accounts/logout/$', 'user_logout', name='user_logout'),
     url(r'^accounts/profile/$', 'user_profile', name='user_profile'),
     url(r'^tasks/$', 'user_tasks', name='user_tasks'),
