@@ -55,7 +55,7 @@ def create_mailman_user(sender, **kwargs):
             user = kwargs.get('instance')
             client = get_client()
             try:
-                client.create_user(user.email, None, None)
+                client.create_user(user.email, None, None,None)
             except HTTPError:
                 pass
 
